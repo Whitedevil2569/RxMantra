@@ -1,0 +1,30 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# Frontend
+app/frontend/dist/
+
+# Environment
+.env
+.env.*
+
+# Logs & temp
+*.log
+uploads/
+tmp/
+
+# IDE
+.vscode/
+.idea/
+
+# Large files - VERY
+*.pt
+*.pth
+runs/
+datasets/
+weights/

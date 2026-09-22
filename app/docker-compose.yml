@@ -1,0 +1,40 @@
+# RxMantra — CPU-only production stack.
+# From D:\RxMantra\app:   docker compose up --build
+# Then open http://localhost  (or the server's public IP / domain).
+#
+# Only the web tier is published. The backend and ML service are reachable
+# only on the internal Docker network — never exposed to the internet.
+
+services:
+  ml:
+    build:
+      context: ..                      # repo root, so best.pt can be copied in
+      dockerfile: app/ml-service/Dockerfile
+    environment:
+      IMGSZ: "1024"                    # drop to 640 for ~2-3x faster CPU inference
+    expose:
+      - "8000"
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      PORT: "3001"
+      ML_SERVICE_URL: "http://ml:8000"
+      RATE_LIMIT_PER_MIN: "20"
+      # ALLOWED_ORIGIN not needed — the browser calls /api same-origin via nginx.
+    expose:
+      - "3001"
+    depends_on:
+      - ml
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"                        # the only public port
+    depends_on:
+      - backend
+    restart: unless-stopped
