@@ -13,12 +13,11 @@ import io
 
 # ============== MODEL DOWNLOAD SETTINGS ==============
 MODEL_DIR = Path("weights")
-MODEL_PATH = MODEL_DIR / "best.pt"
+MODEL_PATH = MODEL_DIR / "best.onnx"
 
 def download_model():
-    """Download the model if it does not exist or is corrupted"""
+    """Download the ONNX model if it does not exist or is corrupted"""
     if MODEL_PATH.exists():
-        # Check if file is suspiciously small (e.g., less than 1MB)
         if MODEL_PATH.stat().st_size < 1000000:
             print("Found corrupted model file. Deleting and re-downloading...")
             MODEL_PATH.unlink()
@@ -26,11 +25,11 @@ def download_model():
             print(f"Model already exists at {MODEL_PATH}")
             return
 
-    print("Model not found. Downloading from GitHub Releases...")
+    print("Model not found. Downloading ONNX from GitHub Releases...")
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Direct download link to GitHub Release
-    url = "https://github.com/Whitedevil2569/RxMantra/releases/download/v1.0/best.pt"
+    # Direct download link to your GitHub Release ONNX file
+    url = "https://github.com/Whitedevil2569/RxMantra/releases/download/v1.0/best.onnx"
     urllib.request.urlretrieve(url, str(MODEL_PATH))
 
     print(f"Model downloaded successfully → {MODEL_PATH}")
@@ -38,13 +37,12 @@ def download_model():
 # ============== LOAD MODEL ON STARTUP ==============
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Download + load model when service starts
     download_model()
-    print(f"Loading YOLO model from {MODEL_PATH}...")
-    app.state.model = YOLO(str(MODEL_PATH))
-    print("Model loaded successfully!")
+    print(f"Loading ONNX YOLO model from {MODEL_PATH}...")
+    # Ultralytics natively handles .onnx files via onnxruntime
+    app.state.model = YOLO(str(MODEL_PATH), task="detect")
+    print("ONNX Model loaded successfully!")
     yield
-    # cleanup if needed
     print("Shutting down...")
 
 app = FastAPI(title="RxMantra ML Service", lifespan=lifespan)
@@ -74,12 +72,10 @@ async def predict(image: UploadFile = File(...)):
 
     start = time.time()
 
-    # Read image
     contents = await image.read()
     img = Image.open(io.BytesIO(contents)).convert("RGB")
     img_np = np.array(img)
 
-    # Run inference
     results = app.state.model.predict(img_np, conf=0.25, verbose=False)
 
     detections = []
