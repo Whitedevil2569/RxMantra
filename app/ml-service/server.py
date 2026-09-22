@@ -40,7 +40,7 @@ async def lifespan(app: FastAPI):
     download_model()
     print(f"Loading ONNX YOLO model from {MODEL_PATH}...")
     # Ultralytics natively handles .onnx files via onnxruntime
-    app.state.model = YOLO(str(MODEL_PATH), task="detect")
+    app.state.model = YOLO(str(MODEL_PATH))
     print("ONNX Model loaded successfully!")
     yield
     print("Shutting down...")
