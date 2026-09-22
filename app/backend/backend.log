@@ -1,2 +1,0 @@
-RxMantra backend listening on http://127.0.0.1:3001
-Proxying inference to http://127.0.0.1:8000
