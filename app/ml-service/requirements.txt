@@ -2,7 +2,10 @@
 # torch/torchvision come from the CUDA 12.8 index; see project setup.
 fastapi
 uvicorn[standard]
+ultralytics
+torch
 python-multipart
 pillow
 numpy
-ultralytics
+opencv-python-headless
+requests
