@@ -1,5 +1,3 @@
-# Installed into the project venv (D:\RxMantra\.venv).
-# torch/torchvision come from the CUDA 12.8 index; see project setup.
 fastapi
 uvicorn[standard]
 ultralytics
@@ -9,3 +7,4 @@ pillow
 numpy
 opencv-python-headless
 requests
+onnxruntime
