@@ -12,7 +12,6 @@ from PIL import Image
 import io
 
 # ============== MODEL DOWNLOAD SETTINGS ==============
-# These must be defined before the download_model function
 MODEL_DIR = Path("weights")
 MODEL_PATH = MODEL_DIR / "best.pt"
 
