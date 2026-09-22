@@ -1,9 +1,9 @@
 import os
 import time
+import urllib.request
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-import requests
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from ultralytics import YOLO
@@ -12,27 +12,27 @@ from PIL import Image
 import io
 
 # ============== MODEL DOWNLOAD SETTINGS ==============
+# These must be defined before the download_model function
 MODEL_DIR = Path("weights")
 MODEL_PATH = MODEL_DIR / "best.pt"
-MODEL_URL = "https://drive.google.com/uc?export=download&id=1KXYCsyRftgN4L2u7PljzXAAbvlSZXKa4"
 
 def download_model():
-    """Download the model if it does not exist"""
+    """Download the model if it does not exist or is corrupted"""
     if MODEL_PATH.exists():
-        print(f"Model already exists at {MODEL_PATH}")
-        return
+        # Check if file is suspiciously small (e.g., less than 1MB)
+        if MODEL_PATH.stat().st_size < 1000000:
+            print("Found corrupted model file. Deleting and re-downloading...")
+            MODEL_PATH.unlink()
+        else:
+            print(f"Model already exists at {MODEL_PATH}")
+            return
 
-    print("Model not found. Downloading from Google Drive...")
+    print("Model not found. Downloading from GitHub Releases...")
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
-    response = requests.get(MODEL_URL, stream=True)
-    if response.status_code != 200:
-        raise RuntimeError(f"Failed to download model. Status code: {response.status_code}")
-
-    with open(MODEL_PATH, "wb") as f:
-        for chunk in response.iter_content(chunk_size=8192):
-            if chunk:
-                f.write(chunk)
+    # Direct download link to GitHub Release
+    url = "https://github.com/Whitedevil2569/RxMantra/releases/download/v1.0/best.pt"
+    urllib.request.urlretrieve(url, str(MODEL_PATH))
 
     print(f"Model downloaded successfully → {MODEL_PATH}")
 
