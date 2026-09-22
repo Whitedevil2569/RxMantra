@@ -1,4 +1,4 @@
-```python
+
 import time
 import urllib.request
 from contextlib import asynccontextmanager
@@ -302,4 +302,4 @@ async def predict(image: UploadFile = File(...)):
 
         "detections": detections,
     }
-```
+
