@@ -8,7 +8,9 @@ structured detections (box + segmentation polygon + class + confidence).
 This service is internal: it is called by the Node backend, not the browser.
 """
 import io
+import os
 import time
+import asyncio
 import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -18,6 +20,7 @@ import torch
 from PIL import Image
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse
+from starlette.concurrency import run_in_threadpool
 
 logging.basicConfig(
     level=logging.INFO,
@@ -27,7 +30,6 @@ log = logging.getLogger("rxmantra.ml")
 
 # --- Resolve the model path. Override with MODEL_PATH env (used in Docker). ---
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-import os
 MODEL_PATH = Path(
     os.environ.get("MODEL_PATH", PROJECT_ROOT / "runs" / "dental_seg-4" / "weights" / "best.pt")
 )
@@ -37,6 +39,10 @@ IMGSZ = int(os.environ.get("IMGSZ", "1024"))
 
 # Populated at startup.
 STATE: dict = {"model": None, "names": {}, "device": "cpu"}
+
+# Serialize GPU inference: one request at a time. The model object is not
+# thread-safe and a single GPU can only run one inference efficiently anyway.
+_infer_lock = asyncio.Lock()
 
 
 @asynccontextmanager
@@ -115,9 +121,14 @@ async def predict(image: UploadFile = File(...)):
 
     t0 = time.perf_counter()
     try:
-        results = model.predict(
-            arr, imgsz=IMGSZ, conf=0.25, device=STATE["device"], verbose=False,
-        )
+        # model.predict() is a blocking GPU call. Run it in a worker thread so it
+        # doesn't stall the event loop (keeps /health and uploads responsive),
+        # and hold the lock so only one inference runs at a time.
+        async with _infer_lock:
+            results = await run_in_threadpool(
+                model.predict,
+                arr, imgsz=IMGSZ, conf=0.25, device=STATE["device"], verbose=False,
+            )
     except Exception as e:  # inference failure
         log.exception("Inference failed")
         raise HTTPException(status_code=500, detail="Inference failed.") from e

@@ -1,5 +1,11 @@
 # Installed into the project venv (D:\RxMantra\.venv).
-# torch/torchvision come from the CUDA 12.8 index; see project setup.
+# torch/torchvision are the CUDA 12.8 (Blackwell sm_120 / RTX 5090) builds and
+# MUST come from the PyTorch cu128 index below, NOT from PyPI. The pinned
+# +cu128 local versions only exist on that index, so pip resolves them there.
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch==2.11.0+cu128
+torchvision==0.26.0+cu128
+
 fastapi
 uvicorn[standard]
 python-multipart

@@ -1,38 +1,65 @@
 # Python
+
 .venv/
-__pycache__/
+**pycache**/
 *.pyc
 *.pyo
 .pytest_cache/
 
 # Node
+
 node_modules/
 npm-debug.log*
 
 # Frontend
+
 app/frontend/dist/
 
 # Environment
+
 .env
 .env.*
 !.env.example
 
 # Runtime
+
 uploads/
 tmp/
 *.log
 
 # IDE
+
 .vscode/
 .idea/
 
 # Playwright
+
 playwright-report/
 test-results/
 
-# ===== IMPORTANT: Ignore ALL model and dataset files =====
+# ===== ML / MODEL FILES =====
+
+# Ignore all model files by default
+
 *.pt
 *.pth
-runs/
-datasets/
+
+# Ignore all training runs by default
+
+runs/*
+
+# Ignore all weights directories by default
+
 weights/
+
+# ===== PRODUCTION MODEL =====
+
+# Allow the required production model and its parent directories
+
+!runs/dental_seg-4/
+!runs/dental_seg-4/weights/
+!runs/dental_seg-4/weights/best.pt
+
+# Ignore datasets
+
+datasets/
