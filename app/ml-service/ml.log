@@ -1,0 +1,53 @@
+INFO:     Started server process [18716]
+INFO:     Waiting for application startup.
+2026-09-22 05:26:09,851  INFO  Loading model: best.pt
+2026-09-22 05:26:11,199  INFO  Model loaded | task=segment | classes=31
+2026-09-22 05:26:11,199  INFO  CUDA available: True | device: NVIDIA GeForce RTX 5090
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:59803 - "GET /health HTTP/1.1" 200 OK
+2026-09-22 05:27:22,683  INFO  predict | 640x640 | 39 detections | 186.4 ms
+INFO:     127.0.0.1:59804 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 05:27:38,887  INFO  predict | 640x640 | 39 detections | 153.5 ms
+INFO:     127.0.0.1:59808 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59819 - "GET /health HTTP/1.1" 200 OK
+2026-09-22 05:28:31,928  INFO  predict | 640x640 | 39 detections | 157.6 ms
+INFO:     127.0.0.1:59819 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64293 - "GET /health HTTP/1.1" 200 OK
+2026-09-22 05:35:21,974  INFO  predict | 640x640 | 39 detections | 152.3 ms
+INFO:     127.0.0.1:64293 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62345 - "GET /classes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62345 - "GET /classes HTTP/1.1" 200 OK
+2026-09-22 05:37:20,067  INFO  predict | 640x640 | 39 detections | 144.9 ms
+INFO:     127.0.0.1:62345 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62353 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65421 - "GET /classes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65421 - "GET /classes HTTP/1.1" 200 OK
+2026-09-22 05:40:25,792  INFO  predict | 2872x1504 | 17 detections | 125.4 ms
+INFO:     127.0.0.1:64088 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 05:51:18,166  INFO  predict | 2750x1316 | 13 detections | 159.4 ms
+INFO:     127.0.0.1:52874 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 05:52:44,698  INFO  predict | 1976x976 | 16 detections | 171.4 ms
+INFO:     127.0.0.1:59574 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 05:56:21,287  INFO  predict | 850x502 | 7 detections | 183.0 ms
+INFO:     127.0.0.1:60277 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 05:59:54,315  INFO  predict | 2740x1316 | 4 detections | 41.5 ms
+INFO:     127.0.0.1:59657 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 06:00:55,373  INFO  predict | 2868x1504 | 11 detections | 99.9 ms
+INFO:     127.0.0.1:58132 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 06:01:26,167  INFO  predict | 2916x1316 | 3 detections | 122.4 ms
+INFO:     127.0.0.1:62504 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 06:05:50,495  INFO  predict | 1976x976 | 16 detections | 152.4 ms
+INFO:     127.0.0.1:64800 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 06:07:04,462  INFO  predict | 1976x976 | 16 detections | 86.5 ms
+INFO:     127.0.0.1:63716 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 06:08:27,001  INFO  predict | 2884x1504 | 8 detections | 123.1 ms
+INFO:     127.0.0.1:58144 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 06:08:55,986  INFO  predict | 2788x1316 | 11 detections | 114.3 ms
+INFO:     127.0.0.1:62298 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 06:09:20,582  INFO  predict | 2872x1504 | 2 detections | 101.1 ms
+INFO:     127.0.0.1:54244 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 06:09:37,909  INFO  predict | 2942x1316 | 16 detections | 154.8 ms
+INFO:     127.0.0.1:60042 - "POST /predict HTTP/1.1" 200 OK
+2026-09-22 06:13:15,164  INFO  predict | 2795x1316 | 9 detections | 148.6 ms
+INFO:     127.0.0.1:60400 - "POST /predict HTTP/1.1" 200 OK

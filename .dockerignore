@@ -1,0 +1,19 @@
+# Keep the ML build context small. Only the model weights are needed from runs/.
+.venv
+datasets
+train.log
+*.log
+.git
+.vscode
+weights
+app/backend/node_modules
+app/frontend/node_modules
+app/frontend/dist
+
+# Exclude all training runs EXCEPT the one deployed model file.
+runs
+!runs/dental_seg-4
+runs/dental_seg-4/*
+!runs/dental_seg-4/weights
+runs/dental_seg-4/weights/*
+!runs/dental_seg-4/weights/best.pt

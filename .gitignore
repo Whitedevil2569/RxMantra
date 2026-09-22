@@ -1,0 +1,39 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Frontend build
+app/frontend/dist/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Runtime / temporary
+uploads/
+tmp/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Playwright
+playwright-report/
+test-results/
+
+# Large model and dataset files (important)
+*.pt
+*.pth
+runs/
+datasets/

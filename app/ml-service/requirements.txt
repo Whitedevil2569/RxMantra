@@ -1,0 +1,8 @@
+# Installed into the project venv (D:\RxMantra\.venv).
+# torch/torchvision come from the CUDA 12.8 index; see project setup.
+fastapi
+uvicorn[standard]
+python-multipart
+pillow
+numpy
+ultralytics
