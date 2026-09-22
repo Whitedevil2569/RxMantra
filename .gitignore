@@ -8,17 +8,16 @@ __pycache__/
 # Node
 node_modules/
 npm-debug.log*
-yarn-error.log*
 
-# Frontend build
+# Frontend
 app/frontend/dist/
 
-# Environment files
+# Environment
 .env
 .env.*
 !.env.example
 
-# Runtime / temporary
+# Runtime
 uploads/
 tmp/
 *.log
@@ -26,14 +25,14 @@ tmp/
 # IDE
 .vscode/
 .idea/
-*.swp
 
 # Playwright
 playwright-report/
 test-results/
 
-# Large model and dataset files (important)
+# ===== IMPORTANT: Ignore ALL model and dataset files =====
 *.pt
 *.pth
 runs/
 datasets/
+weights/
